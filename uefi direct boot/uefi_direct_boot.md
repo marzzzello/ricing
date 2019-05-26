@@ -61,7 +61,11 @@ Also I want hibernation to work and the first initrd entry is for the [microcode
 All in all the command looks like this for me:
 
 ```
-sudo efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "Arch Linux" --loader /vmlinuz-linux --unicode 'root=/dev/mapper/main-root rw cryptdevice=/dev/nvme0n1p2:cryptolvm quiet splash loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0 resume=/dev/mapper/main-swap initrd=\intel-ucode.img initrd=\initramfs-linux.img' --verbose
+sudo efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "Arch Linux" \
+--loader /vmlinuz-linux --unicode 'root=/dev/mapper/main-root rw \
+cryptdevice=/dev/nvme0n1p2:cryptolvm quiet splash loglevel=3 rd.udev.log-priority=3 \
+vt.global_cursor_default=0 resume=/dev/mapper/main-swap initrd=\intel-ucode.img \
+initrd=\initramfs-linux.img' --verbose
 ```
 I also tried `initrd=/IMGNAME.img` instead of `initrd=\IMGNAME.img` and it worked too.
 
