@@ -1,10 +1,8 @@
 # UEFI boot without boot loader
 ## Some basics
-There are multiple options to boot your system. 
-
-
 Source: [Arch boot process](https://wiki.archlinux.org/index.php/Arch_boot_process#System_initialization)
 
+There are multiple options to boot your system. 
 
 #### Under BIOS
 
@@ -50,7 +48,9 @@ I had to do it from the [UEFI Shell](https://wiki.archlinux.org/index.php/EFISTU
 
 The better and easier way is by using efibootmgr. It is just one command that looks like this: 
 ```
-efibootmgr --disk /dev/sdX --part Y --create --label "Arch Linux" --loader /vmlinuz-linux --unicode 'root=PARTUUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX rw initrd=\initramfs-linux.img' --verbose
+efibootmgr --disk /dev/sdX --part Y --create --label "Arch Linux" \
+--loader /vmlinuz-linux --unicode 'root=PARTUUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX \
+rw initrd=\initramfs-linux.img' --verbose
 ```
 Make sure to use the correct disk and partition number. 
 Then change the kernel parameters to what you had. Just look it up in `/boot/grub/grub.cfg` if you used Grub or try `cat /proc/cmdline`.
@@ -67,7 +67,11 @@ I also tried `initrd=/IMGNAME.img` instead of `initrd=\IMGNAME.img` and it worke
 
 And for the fallback initramfs I created a second entry:
 ```
-sudo efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "Arch Linux (fallback initramfs)" --loader /vmlinuz-linux --unicode 'root=/dev/mapper/main-root rw cryptdevice=/dev/nvme0n1p2:cryptolvm quiet splash loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0 resume=/dev/mapper/main-swap initrd=\initramfs-linux-fallback.img' --verbose
+sudo efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "Arch Linux \
+(fallback initramfs)" --loader /vmlinuz-linux --unicode 'root=/dev/mapper/main-root \
+rw cryptdevice=/dev/nvme0n1p2:cryptolvm quiet splash loglevel=3 rd.udev.log-priority=3 \
+vt.global_cursor_default=0 resume=/dev/mapper/main-swap \
+initrd=\initramfs-linux-fallback.img' --verbose
 ```
 
 Make sure the boot order is correct. You can set it with `sudo efibootmgr -o XXXX,YYYY,ZZZZ,...`
