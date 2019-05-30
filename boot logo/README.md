@@ -7,7 +7,7 @@ Set your model and set the filter for components -> BIOS/UEFI.
 Go to the entry that says `(Utility & Bootable CD)` and download the `BIOS Update (Bootable CD)`
 - Then extract the iso with `geteltorito -o bios.img n24ur09w.iso`
 - And write it to a USB stick `sudo dd if=bios.img of=/dev/sdX bs=4M`
-- Mount the stick and copy the image to `FLASH/LOGO.JPG`, `FLASH/LOGO.GIF`, or `FLASH/LOGO.BMP`
+- Mount the stick and copy the image to `FLASH/LOGO.JPG`, `FLASH/LOGO.GIF`, or `FLASH/LOGO.BMP` (write everything in capital letters)
 - If you already have the latest BIOS version installed, you'll need to turn off the BIOS setting for preventing downgrades, as it seems to also prevent re-flashing the same version.
 - Boot from the stick and make the BIOS update
 
